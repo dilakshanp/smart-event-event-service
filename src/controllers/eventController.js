@@ -30,7 +30,7 @@ const getAllEvents = async (req, res) => {
     let query = {};
     if (search) query.title = { $regex: search, $options: "i" };
     if (date) query.date = { $gte: new Date(date) };
-    const events = await find(query).sort({ date: 1 });
+    const events = await Event.find(query).sort({ date: 1 });
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -40,7 +40,7 @@ const getAllEvents = async (req, res) => {
 // Get single event
 const getEventById = async (req, res) => {
   try {
-    const event = await findById(req.params.id);
+    const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
     res.json(event);
   } catch (err) {
@@ -51,7 +51,7 @@ const getEventById = async (req, res) => {
 // Update event (protected)
 const updateEvent = async (req, res) => {
   try {
-    const event = await findById(req.params.id);
+    const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
     if (event.organizerId !== (req.user.id || req.user.userId)) {
       return res.status(403).json({ message: "Not authorized" });
@@ -67,7 +67,7 @@ const updateEvent = async (req, res) => {
 // Delete event (protected)
 const deleteEvent = async (req, res) => {
   try {
-    const event = await findById(req.params.id);
+    const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
     if (event.organizerId !== (req.user.id || req.user.userId)) {
       return res.status(403).json({ message: "Not authorized" });
@@ -82,7 +82,7 @@ const deleteEvent = async (req, res) => {
 // Check availability (public - used by Registration Service)
 const checkAvailability = async (req, res) => {
   try {
-    const event = await findById(req.params.id);
+    const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
 
     // In future we can count real bookings from Registration Service
