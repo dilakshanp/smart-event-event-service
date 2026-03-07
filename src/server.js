@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 
+import swaggerRoute from "./routes/swaggerRoute.js";
 import eventRoutes from "./routes/eventRoutes.js";
 
 dotenv.config();
@@ -17,6 +18,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/events", eventRoutes);
+
+// Swagger docs
+app.use("/api-docs", swaggerRoute);
 
 // Health check
 app.get("/health", (req, res) => {
