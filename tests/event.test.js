@@ -31,7 +31,7 @@ describe("Event API", () => {
       .send(mockEvent);
 
     expect(res.statusCode).toBe(201);
-    expect(res.body.message).toBe("Event created successfully");
+    expect(res.body.message).toBe("Event created successfully!");
   });
 
   // GET ALL EVENTS
