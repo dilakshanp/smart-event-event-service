@@ -31,6 +31,11 @@ app.get("/health", (req, res) => {
   });
 });
 
+// Health check
+app.get("/hi", (req, res) => {
+  return "helloworld";
+});
+
 // DB connection
 export const connectDB = async () => {
   try {
