@@ -33,7 +33,11 @@ app.get("/health", (req, res) => {
 
 // Health check
 app.get("/hi", (req, res) => {
-  return "helloworld";
+  res.status(200).json({
+    status: "hello",
+    service: "event-service",
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // DB connection
