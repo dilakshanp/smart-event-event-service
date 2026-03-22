@@ -11,10 +11,11 @@ dotenv.config();
 
 export const app = express();
 
-// Middleware
-app.use(helmet());
-app.use(cors());
+// Security middleware (DevSecOps best practices)
+app.use(helmet()); // Secure headers
+app.use(cors({ origin: "*" })); // Later restrict to your frontend
 app.use(express.json());
+app.use(apiLimiter); // Rate limiting
 
 // Routes
 app.use("/api/events", eventRoutes);
@@ -26,15 +27,6 @@ app.use("/api-docs", swaggerRoute);
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "healthy",
-    service: "event-service",
-    timestamp: new Date().toISOString(),
-  });
-});
-
-// Health check
-app.get("/hi", (req, res) => {
-  res.status(200).json({
-    status: "hello",
     service: "event-service",
     timestamp: new Date().toISOString(),
   });
