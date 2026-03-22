@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import rateLimit from "express-rate-limit";
 
 import swaggerRoute from "./routes/swaggerRoute.js";
 import eventRoutes from "./routes/eventRoutes.js";
@@ -15,7 +16,12 @@ export const app = express();
 app.use(helmet()); // Secure headers
 app.use(cors({ origin: "*" })); // Later restrict to your frontend
 app.use(express.json());
-app.use(apiLimiter); // Rate limiting
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  }),
+); // Rate limiting
 
 // Routes
 app.use("/api/events", eventRoutes);
