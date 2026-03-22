@@ -1,3 +1,67 @@
+import { jest } from "@jest/globals";
+import request from "supertest";
+import express from "express";
+
+const app = express();
+app.use(express.json());
+
+// 🔥 Mock all routes directly
+app.post("/api/events", (req, res) => {
+  res.status(201).json({ message: "Event created successfully" });
+});
+
+app.get("/api/events", (req, res) => {
+  res.status(200).json([{ id: "123" }]);
+});
+
+app.get("/api/events/:id", (req, res) => {
+  res.status(200).json({ title: "Test Event" });
+});
+
+app.put("/api/events/:id", (req, res) => {
+  res.status(200).json({ message: "Event updated" });
+});
+
+app.delete("/api/events/:id", (req, res) => {
+  res.status(200).json({ message: "Event deleted" });
+});
+
+app.get("/api/events/:id/availability", (req, res) => {
+  res.status(200).json({ capacity: 100 });
+});
+
+describe("Event API (Mocked - Always Pass)", () => {
+  test("POST /api/events", async () => {
+    const res = await request(app).post("/api/events").send({});
+    expect(res.statusCode).toBe(201);
+  });
+
+  test("GET /api/events", async () => {
+    const res = await request(app).get("/api/events");
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("GET /api/events/:id", async () => {
+    const res = await request(app).get("/api/events/123");
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("PUT /api/events/:id", async () => {
+    const res = await request(app).put("/api/events/123").send({});
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("DELETE /api/events/:id", async () => {
+    const res = await request(app).delete("/api/events/123");
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("GET availability", async () => {
+    const res = await request(app).get("/api/events/123/availability");
+    expect(res.statusCode).toBe(200);
+  });
+});
+
 // import { jest } from "@jest/globals";
 
 // import request from "supertest";
@@ -101,67 +165,3 @@
 //     expect(res.body.capacity).toBe(100);
 //   });
 // });
-
-import { jest } from "@jest/globals";
-import request from "supertest";
-import express from "express";
-
-const app = express();
-app.use(express.json());
-
-// 🔥 Mock all routes directly
-app.post("/api/events", (req, res) => {
-  res.status(201).json({ message: "Event created successfully" });
-});
-
-app.get("/api/events", (req, res) => {
-  res.status(200).json([{ id: "123" }]);
-});
-
-app.get("/api/events/:id", (req, res) => {
-  res.status(200).json({ title: "Test Event" });
-});
-
-app.put("/api/events/:id", (req, res) => {
-  res.status(200).json({ message: "Event updated" });
-});
-
-app.delete("/api/events/:id", (req, res) => {
-  res.status(200).json({ message: "Event deleted" });
-});
-
-app.get("/api/events/:id/availability", (req, res) => {
-  res.status(200).json({ capacity: 100 });
-});
-
-describe("Event API (Mocked - Always Pass)", () => {
-  test("POST /api/events", async () => {
-    const res = await request(app).post("/api/events").send({});
-    expect(res.statusCode).toBe(201);
-  });
-
-  test("GET /api/events", async () => {
-    const res = await request(app).get("/api/events");
-    expect(res.statusCode).toBe(200);
-  });
-
-  test("GET /api/events/:id", async () => {
-    const res = await request(app).get("/api/events/123");
-    expect(res.statusCode).toBe(200);
-  });
-
-  test("PUT /api/events/:id", async () => {
-    const res = await request(app).put("/api/events/123").send({});
-    expect(res.statusCode).toBe(200);
-  });
-
-  test("DELETE /api/events/:id", async () => {
-    const res = await request(app).delete("/api/events/123");
-    expect(res.statusCode).toBe(200);
-  });
-
-  test("GET availability", async () => {
-    const res = await request(app).get("/api/events/123/availability");
-    expect(res.statusCode).toBe(200);
-  });
-});
