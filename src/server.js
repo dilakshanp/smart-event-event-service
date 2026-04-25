@@ -32,7 +32,7 @@ app.use("/api-docs", swaggerRoute);
 // Health check
 app.get("/health", (req, res) => {
   res.status(200).json({
-    status: "healthy",
+    status: "event-service-healthy",
     service: "event-service",
     timestamp: new Date().toISOString(),
   });
@@ -57,3 +57,5 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }
+
+// change
