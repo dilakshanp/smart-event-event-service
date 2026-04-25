@@ -63,8 +63,8 @@ jobs:
 
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-    outputs:
-      image: ${{ steps.build.outputs.image }}
+  outputs:
+    image: ${{ steps.build.outputs.image }}
 
     steps:
       - uses: actions/checkout@v4
@@ -92,7 +92,10 @@ jobs:
           docker push $REGISTRY/$ECR_REPOSITORY:$TAG
           docker push $REGISTRY/$ECR_REPOSITORY:latest
 
-          echo "image=$REGISTRY/$ECR_REPOSITORY:$TAG" >> $GITHUB_OUTPUT
+          IMAGE="$REGISTRY/$ECR_REPOSITORY:$TAG"
+
+          echo "image=$IMAGE" >> $GITHUB_OUTPUT
+          echo "IMAGE=$IMAGE"
 
   # ───────────────────────────────
   # 🚀 DEPLOY
