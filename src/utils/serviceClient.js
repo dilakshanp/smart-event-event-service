@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const NOTIFICATION_SERVICE_URL =
-  process.env.NOTIFICATION_SERVICE_URL || "http://localhost:3004";
+    process.env.NOTIFICATION_SERVICE_URL || "http://127.0.0.1:3006";
 
 // Send reminder to Notification Service (real inter-service HTTP call)
 const sendEventReminder = async (event) => {
