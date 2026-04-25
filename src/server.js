@@ -32,7 +32,7 @@ app.use("/api-docs", swaggerRoute);
 // Health check
 app.get("/health", (req, res) => {
   res.status(200).json({
-    status: "event-service-healthy",
+    status: "event-service-healthy-sdsdsd",
     service: "event-service",
     timestamp: new Date().toISOString(),
   });
