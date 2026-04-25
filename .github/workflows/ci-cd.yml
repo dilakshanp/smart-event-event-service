@@ -63,8 +63,8 @@ jobs:
 
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-  outputs:
-    image: ${{ steps.build.outputs.image }}
+    outputs:
+      image: ${{ steps.build.outputs.image }}
 
     steps:
       - uses: actions/checkout@v4
