@@ -1,10 +1,10 @@
 import Joi from "joi";
 
 const eventSchema = Joi.object({
-  title: Joi.string().min(3).max(100).required(),
+  title: Joi.string().min(3).max(100),
   description: Joi.string().max(500).allow(""),
-  date: Joi.date().greater("now").required(),
-  location: Joi.string().min(3).max(100).required(),
+  date: Joi.date().greater("now"),
+  location: Joi.string().min(3).max(100),
   capacity: Joi.number().integer().min(1).required(),
 });
 
